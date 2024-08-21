@@ -1,0 +1,70 @@
+﻿<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<div style="border: 3px solid black; padding: 20px; width: 450px; margin: 50px auto;">
+    <!-- Header with Welcome and Account Information -->
+    <div style="display: flex; justify-content: space-between; align-items: center;">
+        <h3 style="margin-right: 10px;">Welcome, John Smith!</h3>
+        <div style="flex-direction: column;">
+            <div style="display: flex; align-items: center;">
+                <label style="margin-right: 5px;">Account:</label>
+                <select id="accountNumber" style="width: 100px;">
+                    <option value="@Model.AccountNumber">@Model.AccountNumber</option>
+                </select>
+            </div>
+            <div style="display: flex; align-items: center; margin-top: 10px;">
+                <label style="margin-right: 5px;">BALANCE:</label>
+                <span id="balance">@Model.Balance.ToString("C") (CAD)</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Error Message -->
+    <div id="error-message" style="color: red; margin-bottom: 10px; text-align: center; display: none;"></div>
+
+    <!-- Transaction Form -->
+    <div style="border: 2px solid black; padding: 20px; margin-top: 20px;">
+        <form id="transactionForm">
+            <div style="margin-bottom: 10px; display: flex; align-items: center;">
+                <label>Amount:</label>
+                <input type="number" id="amount" name="amount" value="1000" style="width: 100px; text-align: right; margin-left: 10px;" />
+                <select id="currency" name="currency" style="width: 80px; margin-left: 10px;">
+                    <option value="CAD">CAD</option>
+                    <option value="USD">USD</option>
+                    <option value="MXN">MXN</option>
+                    <option value="EURO">EURO</option>
+                </select>
+            </div>
+            <div style="text-align: center;">
+                <button type="button" id="withdrawBtn" style="margin-right: 20px;" onclick="submitTransaction('Withdraw')">WITHDRAW</button>
+                <button type="button" id="depositBtn" onclick="submitTransaction('Deposit')">DEPOSIT</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+    function submitTransaction(action) {
+        var amount = $("#amount").val();
+        var currency = $("#currency").val();
+
+        $.ajax({
+            url: '/Home/' + action,
+            type: 'POST',
+            data: {
+                amount: amount,
+                currency: currency
+            },
+            success: function (result) {
+                if (result.error) {
+                    $("#error-message").text(result.error).show();
+                } else {
+                    $("#balance").text(result.balance + ' (CAD)');
+                    $("#error-message").hide(); // Hide error message on successful transaction
+                }
+            },
+            error: function (jqXHR) {
+                $("#error-message").text('An error occurred while processing your transaction.').show();
+            }
+        });
+    }
+</script>

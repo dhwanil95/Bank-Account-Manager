@@ -1,0 +1,46 @@
+.container {
+    width: 400px;
+    margin: 50px auto;
+    font-family: Arial, sans-serif;
+}
+
+h2, h3 {
+    text-align: center;
+    font-size: 1.2em; /* New style */
+    margin-bottom: 15px; /* New style */
+}
+
+h4 {
+    text-align: center; /* Ensure this is centered too */
+    font-size: 1.1em; /* New style */
+    margin-bottom: 10px; /* New style */
+}
+
+label {
+    display: block;
+    margin-top: 10px;
+    font-size: 1em; /* New style */
+}
+
+input, select {
+    width: 100%;
+    margin: 5px 0;
+}
+
+button {
+    padding: 10px 20px;
+    border: 2px solid black;
+    background-color: white;
+    cursor: pointer;
+    font-size: 1em; /* New style */
+}
+
+button:hover {
+    background-color: #f0f0f0;
+}
+
+input[type="number"], select {
+    height: 30px; /* Adjust the height to match the dropdown */
+    padding: 5px; /* Adjust padding if necessary */
+    box-sizing: border-box; /* Ensure padding does not affect the total height */
+}
